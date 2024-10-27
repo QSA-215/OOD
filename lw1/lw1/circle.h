@@ -44,11 +44,11 @@ public:
     }
     sf::Vector2f GetPosition() const override
     {
-        return m_circle.getPosition();
+        return m_circle.getGlobalBounds().getPosition();
     };
     sf::Vector2f GetRightDownCorner() const override
     {
-        return sf::Vector2f(m_circle.getPosition().x + m_circle.getRadius(), m_circle.getPosition().y + m_circle.getRadius());
+        return sf::Vector2f(m_circle.getGlobalBounds().getPosition().x + m_circle.getGlobalBounds().width, m_circle.getGlobalBounds().getPosition().y + m_circle.getGlobalBounds().height);
     };
     void Move(const sf::Vector2f& point) override
     {

@@ -91,8 +91,8 @@ void ListenEvents(sf::RenderWindow& window, std::vector<Shape*>& shapes, std::ve
 			}
 			for (int i = tempShapes.size(); i-- > 0; )
 			{
-				shapes[i]->Select(false);
-				shapes.erase(shapes.begin() + i);
+				shapes[tempShapes[i]]->Select(false);
+				shapes.erase(shapes.begin() + tempShapes[i]);
 			}
 			if (!group->IsEmpty())
 			{

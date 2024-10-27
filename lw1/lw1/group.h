@@ -37,7 +37,7 @@ public:
     };
     float GetPerimeter() const override
     {return 0;};
-    float GetArea() const override // возможно убрать
+    float GetArea() const override
     {return 0;};
     std::string GetParams() const override
     {return "";};
@@ -52,11 +52,16 @@ public:
     {
         if (!m_group.empty())
         {
-            sf::Vector2f minPos = m_group[0]->GetPosition();
+            float minX = m_group[0]->GetPosition().x;
+            float minY = m_group[0]->GetPosition().y;
             for (auto shape : m_group)
-                if (shape->GetPosition().x < minPos.x && shape->GetPosition().y < minPos.y)
-                    minPos = shape->GetPosition();
-            return minPos;
+            {
+                if (shape->GetPosition().x < minX)
+                    minX = shape->GetPosition().x;
+                if (shape->GetPosition().y < minY)
+                    minY = shape->GetPosition().y;
+            }
+            return sf::Vector2f(minX, minY);
         }
         return sf::Vector2f(0, 0);
     };
@@ -64,11 +69,16 @@ public:
     {
         if (!m_group.empty())
         {
-            sf::Vector2f maxPos = m_group[0]->GetRightDownCorner();
+            float maxX = m_group[0]->GetRightDownCorner().x;
+            float maxY = m_group[0]->GetRightDownCorner().y;
             for (auto shape : m_group)
-                if (shape->GetRightDownCorner().x > maxPos.x && shape->GetRightDownCorner().y > maxPos.y)
-                    maxPos = shape->GetRightDownCorner();
-            return maxPos;
+            {
+                if (shape->GetRightDownCorner().x > maxX)
+                    maxX = shape->GetRightDownCorner().x;
+                if (shape->GetRightDownCorner().y > maxY)
+                    maxY = shape->GetRightDownCorner().y;
+            }
+            return sf::Vector2f(maxX, maxY);
         }
         return sf::Vector2f(0, 0);
     };

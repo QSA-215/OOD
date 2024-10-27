@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include "handlers.h"
-// прочитать про компоновщик и фабричный метод
 const int WINDOW_HEIGHT = 600;
 const int WINDOW_WIDTH = 800;
 const std::string WINDOW_NAME = "";

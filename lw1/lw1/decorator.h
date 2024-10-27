@@ -38,7 +38,7 @@ public:
 	};
 	sf::Vector2f GetRightDownCorner() const override
 	{
-		return sf::Vector2f(2, 2);
+		return this->m_shape->GetRightDownCorner();
 	};
 	void Select(const bool select) override
 	{

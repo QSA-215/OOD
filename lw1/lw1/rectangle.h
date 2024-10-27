@@ -42,7 +42,7 @@ public:
     }
     sf::Vector2f GetPosition() const override
     {
-        return m_rectangle.getPosition();
+        return m_rectangle.getGlobalBounds().getPosition();
     };
     void Move(const sf::Vector2f& point) override
     {
@@ -51,7 +51,7 @@ public:
     };
     sf::Vector2f GetRightDownCorner() const override
     {
-        return sf::Vector2f(2, 2);
+        return sf::Vector2f(m_rectangle.getGlobalBounds().getPosition().x + m_rectangle.getGlobalBounds().width, m_rectangle.getGlobalBounds().getPosition().y + m_rectangle.getGlobalBounds().height);
     };
     void Select(const bool select) override
     {

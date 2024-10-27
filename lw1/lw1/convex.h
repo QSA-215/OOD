@@ -60,7 +60,7 @@ public:
     }
     sf::Vector2f GetPosition() const override
     {
-        return m_convex.getPosition();
+        return m_convex.getGlobalBounds().getPosition();
     };
     void Move(const sf::Vector2f& point) override
     {
@@ -69,7 +69,7 @@ public:
     };
     sf::Vector2f GetRightDownCorner() const override
     {
-        return sf::Vector2f(2, 2);
+        return sf::Vector2f(m_convex.getGlobalBounds().getPosition().x + m_convex.getGlobalBounds().width - m_convex.getOutlineThickness(), m_convex.getGlobalBounds().getPosition().y + m_convex.getGlobalBounds().height - m_convex.getOutlineThickness());
     };
     void Select(const bool select) override
     {
