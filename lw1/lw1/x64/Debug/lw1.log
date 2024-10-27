@@ -1,0 +1,50 @@
+﻿  handlers.cpp
+D:\1`University\OOD1\lw1\lw1\circle.h(31,25): warning C4244: return: преобразование "double" в "float", возможна потеря данных
+  (компиляция исходного файла "handlers.cpp")
+  
+D:\1`University\OOD1\lw1\lw1\circle.h(35,44): warning C4244: return: преобразование "double" в "float", возможна потеря данных
+  (компиляция исходного файла "handlers.cpp")
+  
+D:\1`University\OOD1\lw1\lw1\convex.h(34,56): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  (компиляция исходного файла "handlers.cpp")
+  
+D:\1`University\OOD1\lw1\lw1\convex.h(34,32): warning C4267: инициализация: преобразование из "size_t" в "const int"; возможна потеря данных
+  (компиляция исходного файла "handlers.cpp")
+  
+D:\1`University\OOD1\lw1\lw1\convex.h(37,35): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+  (компиляция исходного файла "handlers.cpp")
+  
+D:\1`University\OOD1\lw1\lw1\convex.h(39,31): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+  (компиляция исходного файла "handlers.cpp")
+  
+D:\1`University\OOD1\lw1\lw1\convex.h(47,21): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
+  (компиляция исходного файла "handlers.cpp")
+  
+D:\1`University\OOD1\lw1\lw1\convex.h(48,21): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
+  (компиляция исходного файла "handlers.cpp")
+  
+D:\1`University\OOD1\lw1\lw1\convex.h(49,21): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
+  (компиляция исходного файла "handlers.cpp")
+  
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(58,76): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(58,76): warning C4244:         with
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(58,76): warning C4244:         [
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(58,76): warning C4244:             T=float
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(58,76): warning C4244:         ]
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(58,55): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(58,55): warning C4244:         with
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(58,55): warning C4244:         [
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(58,55): warning C4244:             T=float
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(58,55): warning C4244:         ]
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(69,76): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(69,76): warning C4244:         with
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(69,76): warning C4244:         [
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(69,76): warning C4244:             T=float
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(69,76): warning C4244:         ]
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(69,55): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(69,55): warning C4244:         with
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(69,55): warning C4244:         [
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(69,55): warning C4244:             T=float
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(69,55): warning C4244:         ]
+D:\1`University\OOD1\lw1\lw1\handlers.cpp(92,15): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  lw1.vcxproj -> D:\1`University\OOD1\lw1\x64\Debug\lw1.exe
