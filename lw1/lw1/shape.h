@@ -14,5 +14,6 @@ public:
     virtual void Move(const sf::Vector2f& point) = 0;
     virtual void Select(const bool select) = 0;
     virtual bool IsSelected() const = 0;
+    virtual bool IsGroup() const = 0;
     virtual ~Shape() {}
 };

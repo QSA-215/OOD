@@ -63,6 +63,10 @@ public:
     {
         return m_isSelected;
     };
+    bool IsGroup() const override
+    {
+        return false;
+    };
 
 private:
     sf::CircleShape m_circle;

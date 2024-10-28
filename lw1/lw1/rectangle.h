@@ -61,7 +61,10 @@ public:
     {
         return m_isSelected;
     };
-
+    bool IsGroup() const override
+    {
+        return false;
+    };
 
 private:
     sf::RectangleShape m_rectangle;

@@ -10,7 +10,7 @@ public:
         m_frame.setSize(sf::Vector2f(GetRightDownCorner().x - GetPosition().x, GetRightDownCorner().y - GetPosition().y));
         m_frame.setFillColor(sf::Color::Transparent);
         m_frame.setOutlineThickness(2);
-        m_frame.setOutlineColor(sf::Color::Magenta);
+        m_frame.setOutlineColor(sf::Color::Green);
     };
     void AddShape(Shape* shape)
     {
@@ -95,6 +95,10 @@ public:
     bool IsSelected() const override
     {
         return m_isSelected;
+    };
+    bool IsGroup() const override
+    {
+        return true;
     };
 
 private:

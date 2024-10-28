@@ -48,6 +48,10 @@ public:
 	{
 		return this->m_shape->IsSelected();
 	};
+	bool IsGroup() const override
+	{
+		return this->m_shape->IsGroup();
+	};
 
 protected:
 	Shape* m_shape;

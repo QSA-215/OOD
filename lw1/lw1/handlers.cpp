@@ -43,6 +43,24 @@ void ShapesMoving(sf::RenderWindow& window, std::vector<Shape*>& shapes, std::ve
 		isMove = false;
 };
 
+//void FillGroup(Group*& group, std::vector<Shape*>& objects)
+//{
+//	std::vector<int> tempObjects;
+//	for (int i = 0; i < objects.size(); i++)
+//	{
+//		if (objects[i]->IsSelected())
+//		{
+//			group->AddShape(objects[i]);
+//			tempObjects.push_back(i);
+//		}
+//	}
+//	for (int i = tempObjects.size(); i-- > 0; )
+//	{
+//		objects[tempObjects[i]]->Select(false);
+//		objects.erase(objects.begin() + tempObjects[i]);
+//	}
+//};
+
 void ListenEvents(sf::RenderWindow& window, std::vector<Shape*>& shapes, std::vector<Group*>& groups, bool& isMove)
 {
 	sf::Event event;
@@ -80,6 +98,8 @@ void ListenEvents(sf::RenderWindow& window, std::vector<Shape*>& shapes, std::ve
 		if (event.type == sf::Event::KeyPressed && event.key.control && event.key.code == sf::Keyboard::G)
 		{
 			Group* group = new Group;
+			//FillGroup(group, shapes);
+			//FillGroup(group, dynamic_cast<std::vector<Shape*>>(groups));
 			std::vector<int> tempShapes;
 			for (int i = 0; i < shapes.size(); i++)
 			{
@@ -94,6 +114,21 @@ void ListenEvents(sf::RenderWindow& window, std::vector<Shape*>& shapes, std::ve
 				shapes[tempShapes[i]]->Select(false);
 				shapes.erase(shapes.begin() + tempShapes[i]);
 			}
+
+			std::vector<int> tempGroups;
+			for (int i = 0; i < groups.size(); i++)
+			{
+				if (groups[i]->IsSelected())
+				{
+					group->AddShape(groups[i]);
+					tempGroups.push_back(i);
+				}
+			}
+			for (int i = tempGroups.size(); i-- > 0; )
+			{
+				groups[tempGroups[i]]->Select(false);
+				groups.erase(groups.begin() + tempGroups[i]);
+			}
 			if (!group->IsEmpty())
 			{
 				group->MakeFrame();
@@ -105,20 +140,28 @@ void ListenEvents(sf::RenderWindow& window, std::vector<Shape*>& shapes, std::ve
 		{
 			if (!groups.empty())
 			{
-				Group* lastGroup = groups.back();
-				if (!lastGroup->IsEmpty())
+				for (int i = 0; i < groups.size(); i++)
 				{
-					auto shapesFromGroup = lastGroup->GetShapes();
-					shapes.push_back(shapesFromGroup.back());
-					lastGroup->DeleteShape(shapesFromGroup.back());
-				}
-				else
-				{
-					groups.pop_back();
+					if (groups[i]->IsSelected())
+					{
+						if (!groups[i]->IsEmpty())
+						{
+							auto shapesFromGroup = groups[i]->GetShapes();
+							if (shapesFromGroup.back()->IsGroup())
+								groups.push_back(dynamic_cast<Group*>(shapesFromGroup.back()));
+							else
+								shapes.push_back(shapesFromGroup.back());
+							groups[i]->DeleteShape(shapesFromGroup.back());
+							groups[i]->MakeFrame();
+						}
+						else
+						{
+							groups.erase(groups.begin() + i);
+						}
+					}
 				}
 			}
 		}
-
 		ShapesMoving(window, shapes, groups, isMove);
 	}
 };
