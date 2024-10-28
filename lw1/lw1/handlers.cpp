@@ -20,7 +20,7 @@ void WriteResultsInFile(const std::string& outputFileName, const std::vector<Sha
 	output.close();
 };
 
-void ShapesMoving(sf::RenderWindow& window, std::vector<Shape*>& shapes, std::vector<Group*>& groups, bool& isMove)
+void ShapesMoving(sf::RenderWindow& window, std::vector<Shape*>& shapes, bool& isMove)
 {
 	static sf::Vector2i lastMousePosition;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -34,34 +34,13 @@ void ShapesMoving(sf::RenderWindow& window, std::vector<Shape*>& shapes, std::ve
 		for (auto shape : shapes)
 			if (shape->IsSelected())
 				shape->Move(sf::Vector2f(currentPosition - lastMousePosition));
-		for (auto group : groups)
-			if (group->IsSelected())
-				group->Move(sf::Vector2f(currentPosition - lastMousePosition));
 		lastMousePosition = currentPosition;
 	}
 	else
 		isMove = false;
 };
 
-//void FillGroup(Group*& group, std::vector<Shape*>& objects)
-//{
-//	std::vector<int> tempObjects;
-//	for (int i = 0; i < objects.size(); i++)
-//	{
-//		if (objects[i]->IsSelected())
-//		{
-//			group->AddShape(objects[i]);
-//			tempObjects.push_back(i);
-//		}
-//	}
-//	for (int i = tempObjects.size(); i-- > 0; )
-//	{
-//		objects[tempObjects[i]]->Select(false);
-//		objects.erase(objects.begin() + tempObjects[i]);
-//	}
-//};
-
-void ListenEvents(sf::RenderWindow& window, std::vector<Shape*>& shapes, std::vector<Group*>& groups, bool& isMove)
+void ListenEvents(sf::RenderWindow& window, std::vector<Shape*>& shapes, bool& isMove)
 {
 	sf::Event event;
 	while (window.pollEvent(event))
@@ -82,24 +61,11 @@ void ListenEvents(sf::RenderWindow& window, std::vector<Shape*>& shapes, std::ve
 					shape->Select(false);
 				}
 			}
-			for (auto group : groups)
-			{
-				if (group->Contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)))
-				{
-					group->Select(true);
-				}
-				else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
-				{
-					group->Select(false);
-				}
-			}
 		}
 
 		if (event.type == sf::Event::KeyPressed && event.key.control && event.key.code == sf::Keyboard::G)
 		{
-			Group* group = new Group;
-			//FillGroup(group, shapes);
-			//FillGroup(group, dynamic_cast<std::vector<Shape*>>(groups));
+			Shape* group = new Group;
 			std::vector<int> tempShapes;
 			for (int i = 0; i < shapes.size(); i++)
 			{
@@ -114,63 +80,39 @@ void ListenEvents(sf::RenderWindow& window, std::vector<Shape*>& shapes, std::ve
 				shapes[tempShapes[i]]->Select(false);
 				shapes.erase(shapes.begin() + tempShapes[i]);
 			}
-
-			std::vector<int> tempGroups;
-			for (int i = 0; i < groups.size(); i++)
-			{
-				if (groups[i]->IsSelected())
-				{
-					group->AddShape(groups[i]);
-					tempGroups.push_back(i);
-				}
-			}
-			for (int i = tempGroups.size(); i-- > 0; )
-			{
-				groups[tempGroups[i]]->Select(false);
-				groups.erase(groups.begin() + tempGroups[i]);
-			}
 			if (!group->IsEmpty())
 			{
 				group->MakeFrame();
-				groups.push_back(group);
+				shapes.push_back(group);
 			}
 		}
 
 		if (event.type == sf::Event::KeyPressed && event.key.control && event.key.code == sf::Keyboard::U)
 		{
-			if (!groups.empty())
+			for (int i = 0; i < shapes.size(); i++)
 			{
-				for (int i = 0; i < groups.size(); i++)
+				if (shapes[i]->IsSelected() && shapes[i]->IsGroup())
 				{
-					if (groups[i]->IsSelected())
+					if (!shapes[i]->IsEmpty())
 					{
-						if (!groups[i]->IsEmpty())
-						{
-							auto shapesFromGroup = groups[i]->GetShapes();
-							if (shapesFromGroup.back()->IsGroup())
-								groups.push_back(dynamic_cast<Group*>(shapesFromGroup.back()));
-							else
-								shapes.push_back(shapesFromGroup.back());
-							groups[i]->DeleteShape(shapesFromGroup.back());
-							groups[i]->MakeFrame();
-						}
-						else
-						{
-							groups.erase(groups.begin() + i);
-						}
+						auto shapesFromGroup = shapes[i]->GetShapes();
+						shapes.push_back(shapesFromGroup.back()); // возможны баги с индексами!!!
+						shapes[i]->DeleteShape(shapesFromGroup.back());
+						shapes[i]->MakeFrame();
+					}
+					else
+					{
+						shapes.erase(shapes.begin() + i);
 					}
 				}
 			}
 		}
-		ShapesMoving(window, shapes, groups, isMove);
+		ShapesMoving(window, shapes, isMove);
 	}
 };
 
-void DrawShapes(sf::RenderWindow& window, const std::vector<Shape*>& shapes, const std::vector<Group*>& groups)
+void DrawShapes(sf::RenderWindow& window, const std::vector<Shape*>& shapes)
 {
 	for (auto shape : shapes)
 		shape->Draw(window);
-
-	for (auto group : groups)
-		group->Draw(window);
 };

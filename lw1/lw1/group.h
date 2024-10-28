@@ -4,7 +4,7 @@
 class Group : public Shape
 {
 public:
-    void MakeFrame()
+    void MakeFrame() override
     {
         m_frame.setPosition(GetPosition());
         m_frame.setSize(sf::Vector2f(GetRightDownCorner().x - GetPosition().x, GetRightDownCorner().y - GetPosition().y));
@@ -12,11 +12,11 @@ public:
         m_frame.setOutlineThickness(2);
         m_frame.setOutlineColor(sf::Color::Green);
     };
-    void AddShape(Shape* shape)
+    void AddShape(Shape* shape) override
     {
         m_group.push_back(shape);
     };
-    void DeleteShape(Shape* shape)
+    void DeleteShape(Shape* shape) override
     {
         m_group.erase(std::remove(m_group.begin(), m_group.end(), shape), m_group.end());
     };
@@ -24,7 +24,7 @@ public:
     {
         return m_group;
     };
-    bool IsEmpty()
+    bool IsEmpty() override
     {
         return m_group.empty();
     };

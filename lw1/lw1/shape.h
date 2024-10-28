@@ -15,5 +15,12 @@ public:
     virtual void Select(const bool select) = 0;
     virtual bool IsSelected() const = 0;
     virtual bool IsGroup() const = 0;
+
+    virtual void MakeFrame() {};
+    virtual void AddShape(Shape* shape) {};
+    virtual void DeleteShape(Shape* shape) {};
+    virtual std::vector<Shape*> GetShapes() { return std::vector<Shape*>{}; };
+    virtual bool IsEmpty() { return true; };
+
     virtual ~Shape() {}
 };

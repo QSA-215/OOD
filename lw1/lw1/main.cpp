@@ -17,14 +17,13 @@ int main()
 	std::vector<Shape*> shapes = ReadShapesFromFile(INPUT_FILE_NAME);
 	WriteResultsInFile(OUTPUT_FILE_NAME, shapes);
 
-	std::vector<Group*> groups;
 	bool isMove = false;
 
 	while (window.isOpen())
 	{
 		window.clear(sf::Color::White);
-		ListenEvents(window, shapes, groups, isMove);
-		DrawShapes(window, shapes, groups);
+		ListenEvents(window, shapes, isMove);
+		DrawShapes(window, shapes);
 		window.display();
 	}
 }
