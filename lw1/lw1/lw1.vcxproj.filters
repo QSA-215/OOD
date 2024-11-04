@@ -15,19 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="shape.h">
+    <ClInclude Include="shapeFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="circle.h">
+    <ClInclude Include="circleShape.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="decorator.h">
+    <ClInclude Include="decoratorFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="circleDecorator.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="rectangle.h">
+    <ClInclude Include="rectangleShape.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="rectangleDecorator.h">
@@ -39,7 +39,7 @@
     <ClInclude Include="decorators.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="convex.h">
+    <ClInclude Include="convexShape.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="convexDecorator.h">
@@ -48,10 +48,13 @@
     <ClInclude Include="parser.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="group.h">
+    <ClInclude Include="compositeShape.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="handlers.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="application.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
@@ -63,6 +66,30 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="handlers.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="circleShape.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="convexShape.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="rectangleShape.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="compositeShape.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="application.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="rectangleDecorator.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="circleDecorator.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="convexDecorator.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

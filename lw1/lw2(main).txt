@@ -1,0 +1,276 @@
+#include <fstream>
+#include <SFML/Graphics.hpp>
+#include "parser.h"
+// прочитать про компоновщик и фабричный метод
+const int WINDOW_HEIGHT = 600;
+const int WINDOW_WIDTH = 800;
+const std::string WINDOW_NAME = "";
+const std::string INPUT_FILE_NAME = "input.txt";
+const std::string OUTPUT_FILE_NAME = "output.txt";
+
+std::vector<Shape*> ReadShapesFromFile(const std::string inputFileName)
+{
+	std::ifstream input(inputFileName);
+	std::vector<Shape*> shapes;
+	std::string command;
+	while (std::getline(input, command))
+		ParseCommand(shapes, command);
+	input.close();
+	return shapes;
+};
+
+void WriteResultsInFile(const std::string& outputFileName, const std::vector<Shape*>& shapes)
+{
+	std::ofstream output(outputFileName);
+	for (auto shape : shapes)
+		output << shape->GetParams() << std::endl;
+	output.close();
+};
+
+void ListenEvents(sf::RenderWindow& window, std::vector<Shape*>& shapes, std::vector<Shape*>& selectedShapes, std::vector<Group*>& groups, bool& isMove)
+{
+	sf::Event event;
+	while (window.pollEvent(event))
+	{
+		if (event.type == sf::Event::Closed)
+			window.close();
+
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			if (event.mouseButton.button == sf::Mouse::Left)
+			{
+				for (auto shape : shapes)
+				{
+					if (shape->Contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)))
+					{
+						bool found = false;
+						shape->Frame(true);
+						/*for (int i = 0; i < selectedShapes.size(); i++)
+						{
+							if (selectedShapes[i] == shape)
+							{
+								selectedShapes.erase(selectedShapes.begin() + i);
+								found = true;
+								break;
+							}
+						}*/
+						//Rectangle* frame = new Rectangle(sf::Vector2f(stof(std::to_string(shape->GetRightDownCorner().x - shape->GetPosition().x)), stof(std::to_string(shape->GetRightDownCorner().y - shape->GetPosition().y))), shape->GetPosition(), true);
+						//shapes.push_back(frame);
+						if (!found)
+						{
+							if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+							{
+								selectedShapes.push_back(shape);
+							}
+							else
+							{
+								selectedShapes.clear();
+								selectedShapes.push_back(shape);
+							}
+							break;
+						}
+					}
+				}
+			}
+
+		}
+
+		if (event.type == sf::Event::KeyPressed && event.key.control && event.key.code == sf::Keyboard::G)
+		{
+			if (!selectedShapes.empty())
+			{
+				Group* group = new Group;
+				for (auto shape : selectedShapes)
+				{
+					group->AddShape(shape);
+				}
+				groups.push_back(group);
+				selectedShapes.clear();
+			}
+		}
+
+		if (event.type == sf::Event::KeyPressed && event.key.control && event.key.code == sf::Keyboard::U)
+		{
+			if (!groups.empty())
+				groups.pop_back();
+			/*if (!groups.empty())
+			{
+				Group lastGroup = groups.back();
+				if (!lastGroup.IsEmpty())
+				{
+					auto shapesFromGroup = lastGroup.GetShapes();
+					lastGroup->RemoveShape(shapesFromGroup.back());
+				}
+				else
+				{
+					groups.pop_back();
+				}
+			}*/
+		}
+
+		static sf::Vector2f lastMousePosition;
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			if (!isMove)
+			{
+				isMove = true;
+				lastMousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+			}
+
+			sf::Vector2f currentPosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+			sf::Vector2f delta = currentPosition - lastMousePosition;
+			for (auto shape : selectedShapes)
+				shape->Move(sf::Vector2f(delta));
+			for (auto group : groups)
+				group->Move(sf::Vector2f(delta));
+			lastMousePosition = currentPosition;
+		}
+		else
+		{
+			isMove = false;
+		}
+	}
+};
+
+void DrawShapes(sf::RenderWindow& window, const std::vector<Shape*>& shapes)
+{
+	for (auto shape : shapes)
+		shape->Draw(window);
+};
+
+int main()
+{
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 8;
+	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_NAME, sf::Style::Default, settings);
+	window.clear(sf::Color::White);
+
+	// some work
+	std::vector<Shape*> shapes = ReadShapesFromFile(INPUT_FILE_NAME);
+	WriteResultsInFile(OUTPUT_FILE_NAME, shapes);
+
+
+	std::vector<Shape*> selectedShapes;
+	std::vector<Group*> groups;
+	std::vector<Group*> selectedGroups;
+	bool isMove = false;
+
+	while (window.isOpen())
+	{
+		//listen events
+		ListenEvents(window, shapes, selectedShapes, groups, isMove);
+		window.clear(sf::Color::White);
+		// draw shapes
+		DrawShapes(window, shapes);
+		window.display();
+	}
+	//while (window.isOpen())
+	//{
+	//	sf::Event event;
+	//	while (window.pollEvent(event))
+	//	{
+	//		if (event.type == sf::Event::Closed)
+	//			window.close();
+	//
+	//		if (event.type == sf::Event::MouseButtonPressed)
+	//		{
+	//			if (event.mouseButton.button == sf::Mouse::Left)
+	//			{
+	//				for (auto shape : shapes)
+	//				{
+	//					if (shape->Contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)))
+	//					{
+	//						bool found = false;
+	//						shape->Frame(true);
+	//						/*for (int i = 0; i < selectedShapes.size(); i++)
+	//						{
+	//							if (selectedShapes[i] == shape)
+	//							{
+	//								selectedShapes.erase(selectedShapes.begin() + i);
+	//								found = true;
+	//								break;
+	//							}
+	//						}*/
+	//						//Rectangle* frame = new Rectangle(sf::Vector2f(stof(std::to_string(shape->GetRightDownCorner().x - shape->GetPosition().x)), stof(std::to_string(shape->GetRightDownCorner().y - shape->GetPosition().y))), shape->GetPosition(), true);
+	//						//shapes.push_back(frame);
+	//						if (!found)
+	//						{
+	//							if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+	//							{
+	//								selectedShapes.push_back(shape);
+	//							}
+	//							else
+	//							{
+	//								selectedShapes.clear();
+	//								selectedShapes.push_back(shape);
+	//							}
+	//							break;
+	//						}
+	//					}
+	//				}
+	//			}
+	//				
+	//		}
+	//
+	//		if (event.type == sf::Event::KeyPressed && event.key.control && event.key.code == sf::Keyboard::G)
+	//		{
+	//			if (!selectedShapes.empty())
+	//			{
+	//				Group* group = new Group;
+	//				for (auto shape : selectedShapes)
+	//				{
+	//					group->AddShape(shape);
+	//				}
+	//				shapesGroups.push_back(group);
+	//				selectedShapes.clear();
+	//			}
+	//		}
+	//
+	//		if (event.type == sf::Event::KeyPressed && event.key.control && event.key.code == sf::Keyboard::U)
+	//		{
+	//			if (!shapesGroups.empty())
+	//				shapesGroups.pop_back();
+	//			/*if (!shapesGroups.empty())
+	//			{
+	//				Group lastGroup = shapesGroups.back();
+	//				if (!lastGroup.IsEmpty())
+	//				{
+	//					auto shapesFromGroup = lastGroup.GetShapes();
+	//					lastGroup->RemoveShape(shapesFromGroup.back());
+	//				}
+	//				else
+	//				{
+	//					shapesGroups.pop_back();
+	//				}
+	//			}*/
+	//		}
+	//
+	//		static sf::Vector2f lastMousePosition;
+	//		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	//		{
+	//			if (!isMove)
+	//			{
+	//				isMove = true;
+	//				lastMousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+	//			}
+	//
+	//			sf::Vector2f currentPosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+	//			sf::Vector2f delta = currentPosition - lastMousePosition;
+	//			for (auto shape : selectedShapes)
+	//				shape->Move(sf::Vector2f(delta));
+	//			for (auto group : shapesGroups)
+	//				group->Move(sf::Vector2f(delta));
+	//			lastMousePosition = currentPosition;
+	//		}
+	//		else
+	//		{
+	//			isMove = false;
+	//		}
+	//	}
+	//
+	//	window.clear(sf::Color::White);
+	//	for (auto shape : shapes)
+	//		shape->Draw(window);
+	//	window.display();
+	//}
+}

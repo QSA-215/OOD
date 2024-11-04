@@ -1,5 +1,5 @@
 #pragma once
-#include "circle.h"
-#include "rectangle.h"
-#include "convex.h"
-#include "group.h"
+#include "circleShape.h"
+#include "rectangleShape.h"
+#include "convexShape.h"
+#include "compositeShape.h"

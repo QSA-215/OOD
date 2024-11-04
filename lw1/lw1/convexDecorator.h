@@ -1,12 +1,22 @@
 #pragma once
-#include "decorator.h"
+#include "decoratorFactory.h"
+#include "convexShape.h"
 
 class ConvexDecorator : public Decorator
 {
 public:
-	ConvexDecorator(Shape* shape) : Decorator(shape) {};
-
-	std::string GetParams() const override {
-		return "TRIANGLE: " + Decorator::GetParams();
-	}
+	ConvexDecorator(Convex* shape);
+	std::string GetParams() const override;
+	void Draw(sf::RenderWindow& window) override;
+	float GetArea() const override;
+	float GetPerimeter() const override;
+	bool Contains(const sf::Vector2f& point) const override;
+	sf::Vector2f GetPosition() const override;
+	void Move(const sf::Vector2f& point) override;
+	sf::Vector2f GetRightDownCorner() const override;
+	void Select(const bool select) override;
+	bool IsSelected() const override;
+	bool IsGroup() const override;
+private:
+	Convex* m_shape;
 };

@@ -96,7 +96,7 @@ void ListenEvents(sf::RenderWindow& window, std::vector<Shape*>& shapes, bool& i
 					if (!shapes[i]->IsEmpty())
 					{
 						auto shapesFromGroup = shapes[i]->GetShapes();
-						shapes.push_back(shapesFromGroup.back()); // возможны баги с индексами!!!
+						shapes.push_back(shapesFromGroup.back());
 						shapes[i]->DeleteShape(shapesFromGroup.back());
 						shapes[i]->MakeFrame();
 					}

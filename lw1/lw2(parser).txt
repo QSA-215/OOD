@@ -47,20 +47,64 @@ void ParseCommand(std::vector<Shape*>& shapes, const std::string& command)
 	std::string figureName = command.substr(0, command.find(" "));
 	if (figureName == "CIRCLE:")
 	{
-		Circle* circle = dynamic_cast<Circle*>(ParseCircle(ParseParameters(command)));
+		Shape* circle = ParseCircle(ParseParameters(command));
 		Shape* circleDecorator = new CircleDecorator(circle);
 		shapes.push_back(circleDecorator);
 	}
 	else if (figureName == "RECTANGLE:")
 	{
-		Rectangle* rectangle = dynamic_cast<Rectangle*>(ParseRectangle(ParseParameters(command)));
+		Shape* rectangle = ParseRectangle(ParseParameters(command));
 		Shape* rectangleDecorator = new RectangleDecorator(rectangle);
 		shapes.push_back(rectangleDecorator);
 	}
 	else if (figureName == "TRIANGLE:")
 	{
-		Convex* triangle = dynamic_cast<Convex*>(ParseTriangle(ParseParameters(command)));
+		Shape* triangle = ParseTriangle(ParseParameters(command));
 		Shape* triangleDecorator = new ConvexDecorator(triangle);
 		shapes.push_back(triangleDecorator);
 	}
 };
+
+//Shape* ParseCircle(const std::string& command)
+//{
+//	int cx, cy, r;
+//	std::string temp = command.substr(command.find("=") + 1, command.find(";") - command.find("=") - 1);
+//	cx = std::stoi(temp.substr(0, temp.find(",")));
+//	cy = std::stoi(temp.substr(temp.find(",") + 1));
+//	r = std::stoi(command.substr(command.find("R=") + 2));
+//	return new Circle(r, sf::Vector2f(cx, cy));
+//};
+//
+//Shape* ParseRectangle(const std::string& command)
+//{
+//	int x1, y1, x2, y2;
+//
+//	std::string temp = command.substr(command.find("P1=") + 3, command.find(";") - command.find("=") - 1);
+//	x1 = std::stoi(temp.substr(0, temp.find(",")));
+//	y1 = std::stoi(temp.substr(temp.find(",") + 1));
+//
+//	temp = command.substr(command.find("P2=") + 3);
+//	x2 = std::stoi(temp.substr(0, temp.find(",")));
+//	y2 = std::stoi(temp.substr(temp.find(",") + 1));
+//
+//	return new Rectangle(sf::Vector2f(x2 - x1, y2 - y1), sf::Vector2f(x1, y1));
+//};
+//
+//Shape* ParseTriangle(const std::string& command)
+//{
+//	int x1, y1, x2, y2, x3, y3;
+//
+//	std::string temp = command.substr(command.find("P1=") + 3, command.find(";") - command.find("=") - 1);
+//	x1 = std::stoi(temp.substr(0, temp.find(",")));
+//	y1 = std::stoi(temp.substr(temp.find(",") + 1));
+//
+//	temp = command.substr(command.find("P2=") + 3, command.find(";") - command.find("=") - 1);
+//	x2 = std::stoi(temp.substr(0, temp.find(",")));
+//	y2 = std::stoi(temp.substr(temp.find(",") + 1));
+//
+//	temp = command.substr(command.find("P3=") + 3);
+//	x3 = std::stoi(temp.substr(0, temp.find(",")));
+//	y3 = std::stoi(temp.substr(temp.find(",") + 1));
+//
+//	return new Convex(3, std::vector<sf::Vector2f> {sf::Vector2f(x1, y1), sf::Vector2f(x2, y2), sf::Vector2f(x3, y3)});
+//};

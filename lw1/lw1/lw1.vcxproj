@@ -131,24 +131,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="application.h" />
     <ClInclude Include="circleDecorator.h" />
-    <ClInclude Include="circle.h" />
-    <ClInclude Include="convex.h" />
+    <ClInclude Include="circleShape.h" />
+    <ClInclude Include="convexShape.h" />
     <ClInclude Include="convexDecorator.h" />
-    <ClInclude Include="decorator.h" />
+    <ClInclude Include="decoratorFactory.h" />
     <ClInclude Include="decorators.h" />
-    <ClInclude Include="group.h" />
+    <ClInclude Include="compositeShape.h" />
     <ClInclude Include="handlers.h" />
     <ClInclude Include="parser.h" />
     <ClInclude Include="rectangleDecorator.h" />
-    <ClInclude Include="shape.h" />
-    <ClInclude Include="rectangle.h" />
+    <ClInclude Include="shapeFactory.h" />
+    <ClInclude Include="rectangleShape.h" />
     <ClInclude Include="shapes.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="application.cpp" />
+    <ClCompile Include="circleDecorator.cpp" />
+    <ClCompile Include="circleShape.cpp" />
+    <ClCompile Include="compositeShape.cpp" />
+    <ClCompile Include="convexDecorator.cpp" />
+    <ClCompile Include="convexShape.cpp" />
     <ClCompile Include="handlers.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="parser.cpp" />
+    <ClCompile Include="rectangleDecorator.cpp" />
+    <ClCompile Include="rectangleShape.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
