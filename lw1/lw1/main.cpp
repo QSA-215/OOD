@@ -5,5 +5,7 @@ const std::string OUTPUT_FILE_NAME = "output.txt";
 
 int main()
 {
-	Application(INPUT_FILE_NAME, OUTPUT_FILE_NAME);
+	std::shared_ptr<Application> app = Application::GetInstance();
+	app->Load(INPUT_FILE_NAME, OUTPUT_FILE_NAME);
+	app->Run();
 }
